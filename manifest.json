@@ -1,6 +1,6 @@
 {
-    "name": "Element Capture",
-    "version": "1.1",
+    "name": "TSE Invoice Capture",
+    "version": "0.1",
     "manifest_version": 2,
     "description": "Screen capture any element on a webpage.",
     "page_action": {

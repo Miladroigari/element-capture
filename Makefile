@@ -1,2 +1,2 @@
 build:
-	git archive --format=zip -o element-capture.zip HEAD
+	git archive --format=zip -o tse-capture.zip HEAD
