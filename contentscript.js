@@ -17,22 +17,31 @@ function start() {
   var element,
     dimensions = {};
 
-  element = document.getElementsByClassName("panel panel-default")[2];
-  products = element.getElementsByClassName("ui-grid-canvas")[0].children;
+  element = document.getElementsByClassName("cart")[0];
+  var items = element.getElementsByClassName("items")[0].getElementsByTagName('tbody');
+;
   var output = "Invoice:\n";
-  var total = 0;
-  //output += 'Product \t price \t size \t subtotal\n';
-  for (item of products) {
-    var text = item.innerText;
-    const [title, brand, price, size, subtotal] = text.split("\n");
-    total += parseFloat(subtotal.replace("$", ""));
-    output += `${brand}-${title}\t${price}\t${size}\t${subtotal}\n`;
+  const menuItem = (item, price) => item+price.padStart(40-item.length,".")
+  for (p of items){
+    var row = p.children[0];
+    const [,title, id, weight, price, quantity, total] = row.children;
+    //var name = row[1].
+    if (title.innerText == '') 
+      continue;
+    var weightText = weight.getElementsByTagName('input')[0].value;
+    weightText = weightText.padStart(20-title.innerText.length,' ');
+    output += `${title.innerText}${weightText}${weight.innerText}\t${price.innerText}\t${quantity.innerText}\t${total.innerText}\n`;
+
   }
-  var tax = total * 0.1;
-  output += `Total = $${total}\n`;
-  output += `Tax(10%) = ${tax}\n`;
-  total = total + tax;
-  output += `Subtotal=${total}`;
+
+  const cartTotal = element.getElementsByClassName("totals form-inline")[0].children[1].children[0].children;
+  const subtotal  = cartTotal[0].children[1].innerText;
+  const tax  = cartTotal[1].children[1].innerText;
+  const total  = cartTotal[2].children[1].innerText;
+  output += `Subtotal = ${subtotal}\n`
+  output += `Tax = ${tax}\n`
+  output += `Total = ${total}`
+
   console.log(output);
 
   navigator.clipboard.writeText(output).then(
