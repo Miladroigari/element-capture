@@ -1,4 +1,5 @@
 chrome.extension.onMessage.addListener(function (
+chrome.extension.onMessage.addListener(function (
   request,
   sender,
   sendResponse
@@ -35,12 +36,19 @@ function start() {
   }
 
   const cartTotal = element.getElementsByClassName("totals form-inline")[0].children[1].children[0].children;
-  const subtotal  = cartTotal[0].children[1].innerText;
-  const tax  = cartTotal[1].children[1].innerText;
-  const total  = cartTotal[2].children[1].innerText;
-  output += `Subtotal = ${subtotal}\n`
-  output += `Tax = ${tax}\n`
-  output += `Total = ${total}`
+
+  for (item of cartTotal){
+    var val = item.children[1].innerText;
+    var caption = item.children[0].innerText;
+    output+= caption + ' ' + val.padStart(35-caption.length, ' ');
+    output+='\n';
+  }
+//   const subtotal  = cartTotal[0].children[1].innerText;
+//   const tax  = cartTotal[1].children[1].innerText;
+//   const total  = cartTotal[2].children[1].innerText;
+//   output += `Subtotal = ${subtotal}\n`
+//   output += `Tax = ${tax}\n`
+//   output += `Total = ${total}`
 
   console.log(output);
 
