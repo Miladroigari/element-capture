@@ -1,5 +1,4 @@
 chrome.extension.onMessage.addListener(function (
-chrome.extension.onMessage.addListener(function (
   request,
   sender,
   sendResponse
@@ -24,6 +23,9 @@ function start() {
   var output = "Invoice:\n";
   const menuItem = (item, price) => item+price.padStart(40-item.length,".")
   for (p of items){
+    if (p.children.length == 0){
+      continue;
+    }
     var row = p.children[0];
     const [,title, id, weight, price, quantity, total] = row.children;
     //var name = row[1].
